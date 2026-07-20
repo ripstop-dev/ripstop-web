@@ -1,0 +1,50 @@
+{
+  "name": "@ripstop/web",
+  "version": "0.1.0",
+  "description": "Force update, kill switch, maintenance mode and remote config for web apps — signed at the edge, verified in the browser.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ripstop-dev/ripstop-web.git"
+  },
+  "homepage": "https://ripstop.dev/docs/web",
+  "sideEffects": false,
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm,cjs --dts --clean --minify",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@noble/ed25519": "^3.1.0",
+    "@types/node": "^26.1.1",
+    "eslint": "^9.32.0",
+    "tsup": "^8.3.0",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.65.0",
+    "vitest": "^4.1.10"
+  },
+  "keywords": [
+    "force-update",
+    "kill-switch",
+    "remote-config",
+    "maintenance-mode",
+    "feature-flags"
+  ]
+}
