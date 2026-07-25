@@ -19,21 +19,6 @@ export type JsonValue =
   | JsonValue[]
   | { [key: string]: JsonValue };
 
-export interface VersionRange {
-  /** Inclusive; absent means unbounded. */
-  from?: string;
-  to?: string;
-}
-
-export interface KillSwitch {
-  active: boolean;
-  /** Empty means every platform. */
-  platforms: Platform[];
-  /** Empty means every version. */
-  version_ranges: VersionRange[];
-  message_key: string;
-}
-
 export interface Maintenance {
   /** Server-evaluated at fetch time. The browser never checks the schedule. */
   active: boolean;
@@ -63,7 +48,6 @@ export interface RipstopConfig {
   env: string;
   published_at: string;
   key_id: string;
-  kill: KillSwitch;
   maintenance: Maintenance;
   update: Partial<Record<Platform, UpdateEntry>>;
   values: Record<string, JsonValue>;
@@ -122,7 +106,8 @@ export function parseConfig(input: unknown): RipstopConfig | null {
     messages[locale] = out;
   }
 
-  const kill = isRecord(input.kill) ? input.kill : {};
+  // Legacy payloads may still carry a `kill` key; like any other unknown
+  // field, it is simply never read.
   const maintenance = isRecord(input.maintenance) ? input.maintenance : {};
 
   return {
@@ -131,19 +116,6 @@ export function parseConfig(input: unknown): RipstopConfig | null {
     env: str(input.env, 'production'),
     published_at: str(input.published_at),
     key_id: str(input.key_id),
-    kill: {
-      active: bool(kill.active),
-      platforms: Array.isArray(kill.platforms)
-        ? (kill.platforms.filter((p) => typeof p === 'string') as Platform[])
-        : [],
-      version_ranges: Array.isArray(kill.version_ranges)
-        ? kill.version_ranges.filter(isRecord).map((r) => ({
-            ...(typeof r.from === 'string' ? { from: r.from } : {}),
-            ...(typeof r.to === 'string' ? { to: r.to } : {}),
-          }))
-        : [],
-      message_key: str(kill.message_key, 'kill_default'),
-    },
     maintenance: {
       active: bool(maintenance.active),
       starts_at: typeof maintenance.starts_at === 'string' ? maintenance.starts_at : null,

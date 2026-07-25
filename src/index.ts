@@ -1,6 +1,6 @@
 /**
- * Ripstop for the web — force update, kill switch, maintenance mode and remote
- * config, signed at the edge and verified in the browser.
+ * Ripstop for the web — remote config, update walls and maintenance mode,
+ * signed at the edge and verified in the browser.
  *
  * ```ts
  * const ripstop = await Ripstop.init({
@@ -25,13 +25,11 @@ export type {
 export { parseConfig } from './types.js';
 export type {
   JsonValue,
-  KillSwitch,
   Maintenance,
   Platform,
   RipstopConfig,
   SoftPolicy,
   UpdateEntry,
-  VersionRange,
 } from './types.js';
 export { LocalStorageAdapter, MemoryStorage } from './storage.js';
 export type { RipstopStorage } from './storage.js';

@@ -1,6 +1,6 @@
 # @ripstop/web
 
-**Force update, kill switch, maintenance mode and remote config for web apps.**
+**Remote config, update walls and maintenance mode for web apps.**
 Signed at the edge, verified in the browser, 6.5 KB gzipped.
 
 [![npm](https://img.shields.io/npm/v/@ripstop/web.svg)](https://www.npmjs.com/package/@ripstop/web)
@@ -26,9 +26,6 @@ const ripstop = await Ripstop.init({
 const decision = await ripstop.check();
 
 switch (decision.type) {
-  case 'kill':
-    // This build has been withdrawn.
-    break;
   case 'maintenance':
     // You are down on purpose. decision.endsAt is display-only.
     break;
@@ -77,13 +74,13 @@ Always pass a fallback. On a first load with no network there is no payload yet
 | Network unavailable | Uses the last **signed** payload from localStorage |
 | No network, no cache | `none` — your app runs, unrestricted |
 | Edge returns 5xx, or times out | Cache, then normal |
-| Signature doesn't verify | Discarded. A forged payload can never kill your app |
+| Signature doesn't verify | Discarded. A forged payload can never wall your app |
 | localStorage edited in devtools | Re-verified on read, so it grants nothing |
-| Kill switch on, then network lost | The kill **stays**, until a fresh signed payload clears it |
+| Wall up, then network lost | The wall **stays**, until a fresh signed payload clears it |
 
 The cache is re-verified every time it is read. This matters more on the web
 than anywhere else: `localStorage` is two keystrokes away in devtools, so a
-cache that were trusted would make the kill switch a polite request.
+cache that were trusted would make every wall a polite request.
 
 ## Options
 

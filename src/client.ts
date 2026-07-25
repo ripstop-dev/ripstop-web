@@ -179,7 +179,7 @@ export class Ripstop {
   /**
    * Adopts a payload only if it still verifies. Cached payloads get the same
    * scrutiny as fresh ones — localStorage is editable from the console, so
-   * trusting it would make the kill switch a suggestion.
+   * trusting it would make every wall a suggestion.
    */
   private async adopt(
     body: string,

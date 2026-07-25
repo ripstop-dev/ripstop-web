@@ -4,8 +4,8 @@
 
 First release.
 
-- Force update, soft update, kill switch and maintenance mode, decided by the
-  protocol's evaluation order and verified against the golden vectors.
+- Force update, soft update and maintenance mode, decided by the protocol's
+  evaluation order and verified against the golden vectors.
 - Remote config values in the same signed payload — no extra request.
 - Ed25519 verification of the exact response bytes, with pinned keys and
   `key_id` rotation.

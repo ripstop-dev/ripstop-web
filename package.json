@@ -1,7 +1,7 @@
 {
   "name": "@ripstop/web",
   "version": "0.1.0",
-  "description": "Force update, kill switch, maintenance mode and remote config for web apps — signed at the edge, verified in the browser.",
+  "description": "Remote config, update walls and maintenance mode for web apps — signed at the edge, verified in the browser.",
   "license": "MIT",
   "type": "module",
   "repository": {
@@ -42,7 +42,6 @@
   },
   "keywords": [
     "force-update",
-    "kill-switch",
     "remote-config",
     "maintenance-mode",
     "feature-flags"

@@ -28,7 +28,6 @@ export interface EvaluateContext {
 }
 
 export type Decision =
-  | { type: 'kill'; message: string }
   | {
       type: 'maintenance';
       title: string;
@@ -52,26 +51,7 @@ export function evaluate(config: RipstopConfig, ctx: EvaluateContext): Decision 
   const locale = ctx.locale ?? FALLBACK_LOCALE;
   const version = parseVersion(ctx.appVersion);
 
-  // 1. Kill
-  const kill = config.kill;
-  if (kill.active) {
-    const platformMatch = kill.platforms.length === 0 || kill.platforms.includes(ctx.platform);
-    let rangeMatch = kill.version_ranges.length === 0;
-    if (!rangeMatch && version !== null) {
-      rangeMatch = kill.version_ranges.some((r) => {
-        const from = r.from === undefined ? null : parseVersion(r.from);
-        const to = r.to === undefined ? null : parseVersion(r.to);
-        if (from !== null && compareParsed(version, from) < 0) return false;
-        if (to !== null && compareParsed(version, to) > 0) return false;
-        return true;
-      });
-    }
-    if (platformMatch && rangeMatch) {
-      return { type: 'kill', message: resolveMessage(config, locale, kill.message_key) };
-    }
-  }
-
-  // 2. Maintenance — `active` is server-evaluated at fetch time; starts_at/ends_at are display-only.
+  // 1. Maintenance — `active` is server-evaluated at fetch time; starts_at/ends_at are display-only.
   const maintenance = config.maintenance;
   if (maintenance.active) {
     return {
@@ -85,7 +65,7 @@ export function evaluate(config: RipstopConfig, ctx: EvaluateContext): Decision 
     };
   }
 
-  // 3–4. Force / soft — need a platform entry and a parseable version; otherwise fail open.
+  // 2–3. Force / soft — need a platform entry and a parseable version; otherwise fail open.
   const entry = config.update[ctx.platform];
   if (entry === undefined || version === null) return { type: 'none' };
 
@@ -124,8 +104,8 @@ export function evaluate(config: RipstopConfig, ctx: EvaluateContext): Decision 
 /**
  * Fail-open state machine (README §9): which config may drive a decision after
  * a fetch attempt. Any failure falls back to the last cached *signed* config;
- * with no cache, behave as `none`. Kill stickiness follows: a cached kill stays
- * in force until a fresh, signed config clears it.
+ * with no cache, behave as `none`. A cached decision therefore stays in force
+ * until a fresh, signed config replaces it.
  */
 export type FetchOutcome = 'ok' | 'http_error' | 'timeout' | 'invalid_signature';
 export type ConfigSource = 'fresh' | 'cached' | 'none';

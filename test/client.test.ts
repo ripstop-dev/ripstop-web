@@ -25,21 +25,15 @@ beforeAll(async () => {
   publicKeyB64 = bytesToBase64(await getPublicKeyAsync(privateKey));
 });
 
-function config(options: { kill?: boolean; min?: string; target?: string } = {}) {
+function config(options: { maintenance?: boolean; min?: string; target?: string } = {}) {
   return {
     v: 1,
     app: 'app_test',
     env: 'production',
     published_at: '2026-01-01T00:00:00Z',
     key_id: KEY_ID,
-    kill: {
-      active: options.kill ?? false,
-      platforms: [],
-      version_ranges: [],
-      message_key: 'kill_default',
-    },
     maintenance: {
-      active: false,
+      active: options.maintenance ?? false,
       starts_at: null,
       ends_at: null,
       message_key: 'maint_default',
@@ -60,7 +54,7 @@ function config(options: { kill?: boolean; min?: string; target?: string } = {})
         force_body: 'Reload to continue.',
         soft_title: 'Update available',
         soft_body: 'A new version is ready.',
-        kill_default: 'App unavailable',
+        maint_default: 'Back soon',
       },
     },
   };
@@ -117,7 +111,7 @@ describe('the client', () => {
   });
 
   it('refuses a forged signature and lets the app run', async () => {
-    const { impl } = server(config({ kill: true }), { corrupt: true });
+    const { impl } = server(config({ maintenance: true }), { corrupt: true });
     const gate = await boot(impl);
 
     expect((await gate.check()).type).toBe('none');
@@ -132,23 +126,23 @@ describe('the client', () => {
 
   it('falls back to cache when the network fails', async () => {
     const storage = new MemoryStorage();
-    const good = server(config({ kill: true }));
+    const good = server(config({ maintenance: true }));
     const first = await boot(good.impl, { storage });
-    expect((await first.check()).type).toBe('kill');
+    expect((await first.check()).type).toBe('maintenance');
 
     const broken = server(config(), { status: 500 });
     const second = await boot(broken.impl, { storage });
 
-    expect((await second.check()).type).toBe('kill');
+    expect((await second.check()).type).toBe('maintenance');
     expect(second.source).toBe('cached');
   });
 
   it('refuses a tampered cache', async () => {
     const storage = new MemoryStorage();
-    const good = server(config({ kill: true }));
+    const good = server(config({ maintenance: true }));
     await boot(good.impl, { storage });
 
-    // Someone opens devtools and edits localStorage to lift the kill.
+    // Someone opens devtools and edits localStorage to lift the maintenance wall.
     const raw = JSON.parse(storage.read(`ripstop.config.${KEY}`)!) as { body: string };
     raw.body = JSON.stringify(config());
     storage.write(`ripstop.config.${KEY}`, JSON.stringify(raw));
