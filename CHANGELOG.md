@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- `appVersion` stays required, while the Swift and Flutter SDKs now detect it.
+  A browser has no bundle and no installed version to read: the build is the
+  only thing that knows which build is running. Documented in the README.
+
 ## 0.1.0
 
 First release.

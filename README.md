@@ -51,6 +51,16 @@ switch (decision.type) {
 }
 ```
 
+`appVersion` is explicit here and always will be. The Swift and Flutter SDKs
+read the installed version from the bundle, but a browser has no bundle and no
+installed version to read — the only thing that knows which build is running is
+the build itself, so it has to hand the string over. Every bundler can: Vite's
+`define`, webpack's `DefinePlugin`, or an env var read at build time.
+
+Pass a semantic version, not a commit SHA. The rules are ordered as semantic
+versions, and anything that is not one is treated as no opinion — which lets the
+app run rather than walling it, but also means your rules do nothing.
+
 ## What `force` means on the web
 
 On mobile it means "this binary is stale, go to the store". On the web there is
