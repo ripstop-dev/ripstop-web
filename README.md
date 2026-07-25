@@ -1,19 +1,28 @@
-# @ripstop/web
+<p align="center">
+  <a href="https://ripstop.dev"><img src="https://ripstop.dev/mark.png" width="56" alt="Ripstop"></a>
+</p>
 
-**Remote config, update walls and maintenance mode for web apps.**
-Signed at the edge, verified in the browser, 6.5 KB gzipped.
+<h1 align="center">Ripstop Web SDK</h1>
 
-[![npm](https://img.shields.io/npm/v/@ripstop/web.svg)](https://www.npmjs.com/package/@ripstop/web)
-[![CI](https://github.com/ripstop-dev/ripstop-web/actions/workflows/ci.yaml/badge.svg)](https://github.com/ripstop-dev/ripstop-web/actions/workflows/ci.yaml)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+<p align="center">
+  <a href="https://github.com/ripstop-dev/ripstop-web/actions/workflows/ci.yml"><img src="https://github.com/ripstop-dev/ripstop-web/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+</p>
 
-## Install
+<p align="center"><b>Remote config, update walls and maintenance mode for web apps — signed at the edge, verified in the browser, 6.5 KB gzipped.</b></p>
+
+## Installation
+
+`@ripstop/web` is not on npm yet. Until it is, install straight from GitHub —
+the package builds itself on install:
 
 ```bash
-npm install @ripstop/web
+npm install github:ripstop-dev/ripstop-web
 ```
 
-## Quickstart
+Once it is published this becomes the `npm install @ripstop/web` you expected.
+
+## Quick start
 
 ```ts
 import { Ripstop } from '@ripstop/web';
@@ -67,6 +76,19 @@ const limit = ripstop.value('upload_limit', 10);
 Always pass a fallback. On a first load with no network there is no payload yet
 — that is the fail-open path working as intended.
 
+## API
+
+| | Default | |
+| --- | --- | --- |
+| `apiKey` | — | Your app's public SDK key. Safe to ship |
+| `appVersion` | — | The build you are running; rules evaluate against it |
+| `locale` | `en` | Which wall copy to resolve; falls back to `en` per key |
+| `minFetchInterval` | 6 hours | How long a payload is fresh enough to skip the network |
+| `timeoutMs` | 5000 | Fetch budget. After that, cache |
+| `storage` | localStorage | Swap for `MemoryStorage`, sessionStorage, your own |
+| `signingKeys` | pinned | Override for self-hosted deployments and tests |
+| `fetchImpl` | global | Inject your own for tests or a proxy |
+
 ## What it does when things break
 
 | Situation | What your app does |
@@ -81,19 +103,6 @@ Always pass a fallback. On a first load with no network there is no payload yet
 The cache is re-verified every time it is read. This matters more on the web
 than anywhere else: `localStorage` is two keystrokes away in devtools, so a
 cache that were trusted would make every wall a polite request.
-
-## Options
-
-| | Default | |
-| --- | --- | --- |
-| `apiKey` | — | Your app's public SDK key. Safe to ship |
-| `appVersion` | — | The build you are running; rules evaluate against it |
-| `locale` | `en` | Which wall copy to resolve; falls back to `en` per key |
-| `minFetchInterval` | 6 hours | How long a payload is fresh enough to skip the network |
-| `timeoutMs` | 5000 | Fetch budget. After that, cache |
-| `storage` | localStorage | Swap for `MemoryStorage`, sessionStorage, your own |
-| `signingKeys` | pinned | Override for self-hosted deployments and tests |
-| `fetchImpl` | global | Inject your own for tests or a proxy |
 
 ## SSR
 

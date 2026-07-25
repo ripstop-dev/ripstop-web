@@ -27,6 +27,7 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm,cjs --dts --clean --minify",
+    "prepare": "npm run build",
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "lint": "eslint ."

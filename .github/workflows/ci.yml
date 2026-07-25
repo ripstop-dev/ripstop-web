@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
 
 jobs:
   test:
@@ -11,10 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 22 }
-      - run: npm install
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
       - run: npm run typecheck
+      - run: npm run lint
       # The golden vectors are the contract between every Ripstop SDK. Red here
       # means this SDK disagrees with the protocol, not the other way round.
       - run: npm test
-      - run: npm run build
