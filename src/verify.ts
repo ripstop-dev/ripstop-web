@@ -6,7 +6,7 @@
  * silently degrades on older Safari is worse than one that carries 4 KB.
  *
  * The signature covers the raw response body, so verification happens before
- * anything is parsed — `JSON.parse` then `JSON.stringify` would produce
+ * anything is parsed. `JSON.parse` then `JSON.stringify` would produce
  * different bytes for the same document and reject payloads that were genuine.
  */
 import { verifyAsync } from '@noble/ed25519';
@@ -22,9 +22,9 @@ export class SignatureVerifier {
   constructor(private readonly keys: Record<string, string>) {}
 
   /**
-   * True only for a genuine signature by the named pinned key. Every failure —
-   * unknown key, malformed base64, wrong length, bad signature — is a plain
-   * false, and callers then fall back to cache.
+   * True only for a genuine signature by the named pinned key. Every failure
+   * is a plain false: an unknown key, malformed base64, the wrong length, a
+   * bad signature. Callers then fall back to cache.
    */
   async verify(body: string, signature: string, keyId: string): Promise<boolean> {
     const encoded = this.keys[keyId];

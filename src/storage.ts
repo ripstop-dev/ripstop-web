@@ -2,7 +2,7 @@
  * Where the last signed payload and the snooze ledger live.
  *
  * The payload is stored *with* its signature and re-verified on read, so a
- * cached config carries exactly as much authority as a fresh one — and no more.
+ * cached config carries exactly as much authority as a fresh one, and no more.
  * On the web this matters more than on mobile: localStorage is two keystrokes
  * away in devtools, so a cache that were trusted would make every wall a
  * polite request.

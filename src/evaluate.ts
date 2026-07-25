@@ -51,7 +51,7 @@ export function evaluate(config: RipstopConfig, ctx: EvaluateContext): Decision 
   const locale = ctx.locale ?? FALLBACK_LOCALE;
   const version = parseVersion(ctx.appVersion);
 
-  // 1. Maintenance — `active` is server-evaluated at fetch time; starts_at/ends_at are display-only.
+  // 1. Maintenance. `active` is server-evaluated at fetch time; starts_at/ends_at are display-only.
   const maintenance = config.maintenance;
   if (maintenance.active) {
     return {
@@ -65,7 +65,7 @@ export function evaluate(config: RipstopConfig, ctx: EvaluateContext): Decision 
     };
   }
 
-  // 2–3. Force / soft — need a platform entry and a parseable version; otherwise fail open.
+  // 2–3. Force / soft need a platform entry and a parseable version; otherwise fail open.
   const entry = config.update[ctx.platform];
   if (entry === undefined || version === null) return { type: 'none' };
 

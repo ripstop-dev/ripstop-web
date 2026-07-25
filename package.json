@@ -1,7 +1,7 @@
 {
   "name": "@ripstop/web",
   "version": "0.1.0",
-  "description": "Remote config, update walls and maintenance mode for web apps — signed at the edge, verified in the browser.",
+  "description": "Remote config, update walls and maintenance mode for web apps. Signed at the edge, verified in the browser.",
   "license": "MIT",
   "type": "module",
   "repository": {

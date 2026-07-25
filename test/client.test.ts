@@ -1,6 +1,6 @@
 /**
- * What the client promises when things go wrong — the only time anybody finds
- * out whether a config SDK was written carefully.
+ * What the client promises when things go wrong, which is the only time
+ * anybody finds out whether a config SDK was written carefully.
  *
  * These sign with a real key pair and stub `fetch`, so the verification path is
  * exercised for real. A verifier that is mocked in tests is a verifier nobody

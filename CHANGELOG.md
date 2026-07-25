@@ -12,7 +12,7 @@ First release.
 
 - Force update, soft update and maintenance mode, decided by the protocol's
   evaluation order and verified against the golden vectors.
-- Remote config values in the same signed payload — no extra request.
+- Remote config values in the same signed payload, so there is no extra request.
 - Ed25519 verification of the exact response bytes, with pinned keys and
   `key_id` rotation.
 - Signed cache in localStorage, re-verified on read.

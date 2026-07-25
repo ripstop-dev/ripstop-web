@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "notes": "Golden vectors — every implementation (TS reference + all SDKs) must pass all cases. `compare` expects sign of compare(a,b); harnesses must also assert compare(b,a) === -expect. `evaluate` cases: config = top-level replacement of `patch` keys over `base_config` (no deep merge); `expect` is a subset match — listed fields must equal, extra fields in the actual decision are allowed. `config_source` covers the fail-open state machine. Adding a vector is feat:, changing one is an ADR.",
+  "notes": "Golden vectors. Every implementation (TS reference + all SDKs) must pass all cases. `compare` expects sign of compare(a,b); harnesses must also assert compare(b,a) === -expect. `evaluate` cases: config = top-level replacement of `patch` keys over `base_config` (no deep merge); `expect` is a subset match, so listed fields must equal, and extra fields in the actual decision are allowed. `config_source` covers the fail-open state machine. Adding a vector is feat:, changing one is an ADR.",
   "base_config": {
     "v": 1,
     "app": "app_test",

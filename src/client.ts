@@ -1,7 +1,7 @@
 /**
  * The client: fetch, verify, cache, decide.
  *
- * Web differs from mobile in one way that shapes everything here — there is no
+ * Web differs from mobile in one way that shapes everything here: there is no
  * app store and no "old build in the field", because a reload gets the latest
  * code. So `force` on web is not about a binary being stale, it is about a tab
  * that has been open for three days while you shipped a breaking change. The
@@ -178,8 +178,8 @@ export class Ripstop {
 
   /**
    * Adopts a payload only if it still verifies. Cached payloads get the same
-   * scrutiny as fresh ones — localStorage is editable from the console, so
-   * trusting it would make every wall a suggestion.
+   * scrutiny as fresh ones, because localStorage is editable from the console
+   * and trusting it would make every wall a suggestion.
    */
   private async adopt(
     body: string,

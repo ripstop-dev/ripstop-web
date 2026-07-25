@@ -9,12 +9,12 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
 </p>
 
-<p align="center"><b>Remote config, update walls and maintenance mode for web apps — signed at the edge, verified in the browser, 6.5 KB gzipped.</b></p>
+<p align="center"><b>Remote config, update walls and maintenance mode for web apps. Signed at the edge, verified in the browser, 6.5 KB gzipped.</b></p>
 
 ## Installation
 
-`@ripstop/web` is not on npm yet. Until it is, install straight from GitHub —
-the package builds itself on install:
+`@ripstop/web` is not on npm yet. Until it is, install straight from GitHub.
+The package builds itself on install:
 
 ```bash
 npm install github:ripstop-dev/ripstop-web
@@ -53,12 +53,12 @@ switch (decision.type) {
 
 `appVersion` is explicit here and always will be. The Swift and Flutter SDKs
 read the installed version from the bundle, but a browser has no bundle and no
-installed version to read — the only thing that knows which build is running is
+installed version to read. The only thing that knows which build is running is
 the build itself, so it has to hand the string over. Every bundler can: Vite's
 `define`, webpack's `DefinePlugin`, or an env var read at build time.
 
 Pass a semantic version, not a commit SHA. The rules are ordered as semantic
-versions, and anything that is not one is treated as no opinion — which lets the
+versions, and anything that is not one is treated as no opinion, which lets the
 app run rather than walling it, but also means your rules do nothing.
 
 ## What `force` means on the web
@@ -70,7 +70,7 @@ response is usually `location.reload()`.
 
 That is also why the web SDK ships no prebuilt walls. On mobile, a full-screen
 update wall is the same shape in every app. On the web it is a banner, a modal,
-or a route — entirely yours. You get the decision and the copy you wrote in the
+or a route, entirely yours. You get the decision and the copy you wrote in the
 panel; the markup is your business.
 
 ## Remote config
@@ -83,15 +83,15 @@ const checkout = ripstop.value('checkout_enabled', true);
 const limit = ripstop.value('upload_limit', 10);
 ```
 
-Always pass a fallback. On a first load with no network there is no payload yet
-— that is the fail-open path working as intended.
+Always pass a fallback. On a first load with no network there is no payload
+yet. That is the fail-open path working as intended.
 
 ## API
 
 | | Default | |
 | --- | --- | --- |
-| `apiKey` | — | Your app's public SDK key. Safe to ship |
-| `appVersion` | — | The build you are running; rules evaluate against it |
+| `apiKey` | required | Your app's public SDK key. Safe to ship |
+| `appVersion` | required | The build you are running; rules evaluate against it |
 | `locale` | `en` | Which wall copy to resolve; falls back to `en` per key |
 | `minFetchInterval` | 6 hours | How long a payload is fresh enough to skip the network |
 | `timeoutMs` | 5000 | Fetch budget. After that, cache |
@@ -104,7 +104,7 @@ Always pass a fallback. On a first load with no network there is no payload yet
 | Situation | What your app does |
 | --- | --- |
 | Network unavailable | Uses the last **signed** payload from localStorage |
-| No network, no cache | `none` — your app runs, unrestricted |
+| No network, no cache | `none`, so your app runs unrestricted |
 | Edge returns 5xx, or times out | Cache, then normal |
 | Signature doesn't verify | Discarded. A forged payload can never wall your app |
 | localStorage edited in devtools | Re-verified on read, so it grants nothing |
@@ -122,7 +122,7 @@ simply doesn't persist a cache.
 
 ## Conformance
 
-Every Ripstop SDK runs the same `vectors.json` — version ordering, evaluation
+Every Ripstop SDK runs the same `vectors.json`: version ordering, evaluation
 order, message fallback, snooze accounting, the fail-open state machine.
 `npm test` runs it here. If this package and the reference implementation ever
 disagree about a single comparison, CI goes red.

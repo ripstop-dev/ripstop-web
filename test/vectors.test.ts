@@ -34,7 +34,7 @@ describe('compare', () => {
 
 describe('evaluate', () => {
   it.each(evaluations)('$name', ({ patch, context, expect: want }) => {
-    // The patch replaces whole top-level keys — never a deep merge.
+    // The patch replaces whole top-level keys, never a deep merge.
     const config = parseConfig({ ...vectors.base_config, ...(patch ?? {}) });
     expect(config).not.toBeNull();
 

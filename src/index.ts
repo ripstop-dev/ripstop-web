@@ -1,5 +1,5 @@
 /**
- * Ripstop for the web — remote config, update walls and maintenance mode,
+ * Ripstop for the web: remote config, update walls and maintenance mode,
  * signed at the edge and verified in the browser.
  *
  * ```ts

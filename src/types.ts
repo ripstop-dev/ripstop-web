@@ -5,7 +5,7 @@
  * ~14 KB gzipped and would be the largest thing in a package whose whole point
  * is to be small enough that nobody thinks twice about adding it. The server
  * already guarantees the shape, the signature guarantees the bytes came from
- * the server, and anything unreadable falls open — so a schema library here
+ * the server, and anything unreadable falls open, so a schema library here
  * would buy a nicer error message on a path that is already safe.
  */
 
